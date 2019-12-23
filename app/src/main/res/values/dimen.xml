@@ -2,6 +2,7 @@
 <resources>
     <dimen name="time">400px</dimen>
     <dimen name="time_remaining">60px</dimen>
-    <dimen name="button">40px</dimen>
-    <dimen name="input_width">700px</dimen>
+    <dimen name="button">16dp</dimen>
+    <dimen name="checkbox_margin">100px</dimen>
+    <dimen name="input_width">400px</dimen>
 </resources>

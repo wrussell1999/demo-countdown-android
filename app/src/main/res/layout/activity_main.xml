@@ -34,10 +34,10 @@
         app:layout_constraintTop_toBottomOf="@+id/time_remaining" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16px"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/connection_button"
@@ -51,6 +51,7 @@
             app:iconTint="@android:color/white"
             app:icon="@drawable/connect"
             android:layout_marginRight="@dimen/button"
+            android:layout_marginLeft="@dimen/button"
             android:padding="32px" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +59,8 @@
             android:layout_height="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:hint="@string/ip"
-            android:layout_marginLeft="@dimen/button">
+            android:layout_marginLeft="@dimen/button"
+            android:layout_marginRight="@dimen/button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ip"
