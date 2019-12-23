@@ -3,6 +3,7 @@ package com.willrussell.hackathon_timer_android_client;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private Socket socket;
     private TextView time;
     private MaterialButton connectionButton;
+    private Handler uiHandler;
+
 
     final int PORT = 1234;
 
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         time = findViewById(R.id.time);
         connectionButton = findViewById(R.id.connection_button);
         socket = new Socket();
+
+        uiHandler = new Handler();
     }
 
 
@@ -37,15 +42,24 @@ public class MainActivity extends AppCompatActivity {
 
         if (connectionButton.getText().toString().equals(getString(R.string.connect))) {
             connectionButton.setText(getString(R.string.disconnect));
+
+            String ip = ipText.getText().toString().trim();
+            try {
+                connect(ip);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else {
             connectionButton.setText(getString(R.string.connect));
+
+            try {
+                disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        String ip = ipText.getText().toString().trim();
-        try {
-            connect(ip);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -55,6 +69,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void disconnect() throws IOException {
+        socket.close();
+    }
+
+    class NetworkThread implements Runnable {
+        private Socket socket;
+
+        public NetworkThread(Socket socket) {
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            // Check for new data
+            // Only allow for UIThread to be updated if time has finished
+            uiHandler.post(new UIThread(1));
+            // send data back that the timer has started and how long is left.
+        }
+    }
+
+    class UIThread implements Runnable {
+        private int minutes;
+        private boolean timer;
+
+        public UIThread(int minutes) {
+            this.minutes = minutes;
+            this.timer = false;
+        }
+
+        @Override
+        public void run() {
+            // Update time
+            if (startTimer(minutes)) {
+                this.timer = true;
+            }
+
+        }
+
+        public boolean startTimer(int minutes) {
+            this.timer = true;
+            // do a timer here and prevent other timers being started
+            return true;
+        }
 
     }
 }
