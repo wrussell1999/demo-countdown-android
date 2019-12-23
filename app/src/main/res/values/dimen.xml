@@ -4,5 +4,5 @@
     <dimen name="time_remaining">60px</dimen>
     <dimen name="button">16dp</dimen>
     <dimen name="checkbox_margin">100px</dimen>
-    <dimen name="input_width">400px</dimen>
+    <dimen name="input_width">450px</dimen>
 </resources>

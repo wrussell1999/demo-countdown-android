@@ -35,10 +35,22 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         final TextInputEditText ipText = (TextInputEditText) findViewById(R.id.ip);
 
+        if (connectionButton.getText().toString().equals(getString(R.string.connect))) {
+            connectionButton.setText(getString(R.string.disconnect));
+        } else {
+            connectionButton.setText(getString(R.string.connect));
+        }
+        String ip = ipText.getText().toString().trim();
+        try {
+            connect(ip);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void connect() throws IOException {
-        socket.connect(new InetSocketAddress("localhost", PORT), 2000);
+    private void connect(String ip) throws IOException {
+        socket.connect(new InetSocketAddress(ip, PORT), 2000);
         socket.close();
     }
 
