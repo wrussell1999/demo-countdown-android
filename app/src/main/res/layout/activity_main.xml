@@ -10,16 +10,19 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/connected_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disconnected"
+        android:textColor="@color/disconnected" />
+
+    <TextView
         android:id="@+id/time_remaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_remaining"
         android:textSize="@dimen/time_remaining"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@id/time"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/time"
@@ -27,11 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/time_placeholder"
         android:textSize="@dimen/time"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/time_remaining" />
+        android:textColor="@android:color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,6 +70,5 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
