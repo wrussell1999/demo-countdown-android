@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hackathon Timer</string>
+    <string name="time_remaining">Time Remaining:</string>
+    <string name="time_placeholder">0:00</string>
+</resources>
