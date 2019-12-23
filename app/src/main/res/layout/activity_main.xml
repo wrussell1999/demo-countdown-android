@@ -36,27 +36,34 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8px">
+        android:layout_marginTop="16px"
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/connection_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/connect"
             android:textSize="40px"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorAccent"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            app:icon="@drawable/connect"/>
+            app:iconTint="@android:color/white"
+            app:icon="@drawable/connect"
+            android:layout_marginRight="@dimen/button"
+            android:padding="32px" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/input_width"
             android:layout_height="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:hint="@string/ip">
+            android:hint="@string/ip"
+            android:layout_marginLeft="@dimen/button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

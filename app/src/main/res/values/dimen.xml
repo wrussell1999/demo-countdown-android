@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="time">400px</dimen>
-    <dimen name="time_remaining">70px</dimen>
+    <dimen name="time_remaining">60px</dimen>
     <dimen name="button">40px</dimen>
+    <dimen name="input_width">700px</dimen>
 </resources>
