@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,44 +30,5 @@
         android:text="@string/time_placeholder"
         android:textSize="@dimen/time"
         android:textColor="@android:color/black" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/connection_button"
-            android:layout_width="@dimen/input_width"
-            android:layout_height="match_parent"
-            android:text="@string/connect"
-            android:textSize="40px"
-            android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            app:iconTint="@android:color/white"
-            app:icon="@drawable/connect"
-            android:layout_marginRight="@dimen/button"
-            android:layout_marginLeft="@dimen/button"
-            android:padding="32px"
-            android:onClick="onClick" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="@dimen/input_width"
-            android:layout_height="match_parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:hint="@string/ip"
-            android:layout_marginLeft="@dimen/button"
-            android:layout_marginRight="@dimen/button">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ip"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
+    
 </LinearLayout>
