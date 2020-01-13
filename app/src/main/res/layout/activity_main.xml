@@ -15,19 +15,9 @@
         android:text="@string/disconnected"
         android:textColor="@color/disconnected" />
 
-    <TextView
-        android:id="@+id/time_remaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_remaining"
-        android:textSize="@dimen/time_remaining"
-        android:textColor="@android:color/black" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_placeholder"
-        android:textSize="@dimen/time"
-        android:textColor="@android:color/black" />
 </LinearLayout>

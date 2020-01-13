@@ -7,4 +7,9 @@
     <string name="ip">IP Address</string>
     <string name="disconnected">◦ Disconnected</string>
     <string name="connected">◦ Connected to </string>
+    <string name="current_time">Current Time:</string>
+    <string name="title_activity_about_activity">About</string>
+    <string name="made_by">Made by William Russell</string>
+    <string name="github">GitHub</string>
+    <string name="twitter">Twitter</string>
 </resources>
