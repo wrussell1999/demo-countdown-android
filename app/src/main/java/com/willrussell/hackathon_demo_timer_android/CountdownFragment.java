@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CountdownFragment extends Fragment {
 
     public static CountdownFragment newInstance() {
@@ -20,4 +24,14 @@ public class CountdownFragment extends Fragment {
         return view;
     }
 
+    public Date getCountDownTime(String time) {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
+            Date date = formatter.parse(time);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
