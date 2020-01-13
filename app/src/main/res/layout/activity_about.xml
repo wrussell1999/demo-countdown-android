@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,10 +25,12 @@
             android:contentInsetEnd="0dp"
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp" >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
+
                 <TextView
                     android:id="@+id/title"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
@@ -35,11 +39,14 @@
                     android:text="@string/title_activity_about_activity"
                     android:textAlignment="center"
                     android:textColor="@android:color/white" />
+
             </LinearLayout>
+
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_about"/>
+    <include layout="@layout/content_about" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bar"
