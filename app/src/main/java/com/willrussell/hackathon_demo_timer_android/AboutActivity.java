@@ -35,6 +35,10 @@ public class AboutActivity extends AppCompatActivity {
         gotoURL("https://twitter.com/wrussell1999");
     }
 
+    public void gotoWebsite(View view) {
+        gotoURL("https://will-russell.com");
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();

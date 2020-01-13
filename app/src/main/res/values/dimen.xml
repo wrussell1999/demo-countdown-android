@@ -6,4 +6,6 @@
     <dimen name="checkbox_margin">100px</dimen>
     <dimen name="input_width">450px</dimen>
     <dimen name="about_button_width">130dp</dimen>
+    <dimen name="about_button_corner">6dp</dimen>
+    <dimen name="about_button_icon">24dp</dimen>
 </resources>
