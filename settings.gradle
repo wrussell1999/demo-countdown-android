@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='hackathon-timer-android-client'
+rootProject.name='hackathon-demo-timer-android'
