@@ -18,8 +18,7 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about_activity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="@string/title_activity_about_activity"/>
     </application>
 
 </manifest>
