@@ -32,21 +32,10 @@ public class CountdownFragment extends Fragment {
         handler = new Handler();
 
         // get request;
-        String endTime = "Tue, 14 Jan 2020 00:40:37 GMT"; // test data
+        String endTime = "Tue, 14 Jan 2020 00:43:37 GMT"; // test data
         CountdownThread countdownThread = new CountdownThread(endTime);
         new Thread(countdownThread).start();
         return view;
-    }
-
-    public Date getCountDownTime(String time) {
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
-            Date date = formatter.parse(time);
-            return date;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     class CountdownThread implements Runnable {
@@ -122,7 +111,7 @@ public class CountdownFragment extends Fragment {
             if (flash) {
                 background.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
             } else {
-                background.setBackgroundColor(getResources().getColor(android.R.color.white));
+                background.setBackgroundColor(getResources().getColor(android.R.color.background_light));
             }
         }
     }
