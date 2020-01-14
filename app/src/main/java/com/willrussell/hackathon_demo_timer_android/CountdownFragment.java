@@ -32,7 +32,7 @@ public class CountdownFragment extends Fragment {
         handler = new Handler();
 
         // get request;
-        String endTime = "Tue, 14 Jan 2020 00:36:37 GMT"; // test data
+        String endTime = "Tue, 14 Jan 2020 00:40:37 GMT"; // test data
         CountdownThread countdownThread = new CountdownThread(endTime);
         new Thread(countdownThread).start();
         return view;
@@ -87,6 +87,12 @@ public class CountdownFragment extends Fragment {
             long minutes = timeLeft / 60;
             long seconds = timeLeft % 60;
 
+            if (minutes == 0 && seconds <= 10 && seconds % 2 == 0) {
+                this.flash = true;
+            } else {
+                this.flash = false;
+            }
+
             if (minutes == 0 && seconds < 0 && seconds > -10) {
                 timeFormatted = "0:00";
             } else if (minutes == 0 && seconds <= -10) {
@@ -95,12 +101,6 @@ public class CountdownFragment extends Fragment {
                 timeFormatted = "0:00";
             } else {
                 timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
-            }
-
-            if (minutes == 0 && seconds <= 10 && seconds % 2 == 0) {
-                this.flash = true;
-            } else {
-                this.flash = false;
             }
 
             return timeFormatted;
