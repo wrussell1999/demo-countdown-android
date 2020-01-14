@@ -35,6 +35,7 @@ public class TimeFragment extends Fragment {
 
     class TimeThread implements Runnable {
         private String time;
+
         public TimeThread() {
 
         }
