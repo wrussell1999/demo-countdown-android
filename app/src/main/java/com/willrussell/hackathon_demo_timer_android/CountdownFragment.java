@@ -28,11 +28,11 @@ public class CountdownFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.countdown_fragment, container, false);
         countdownView = view.findViewById(R.id.time);
-        background = view.getRootView();
+        background = view;
         handler = new Handler();
 
         // get request;
-        String endTime = "Tue, 14 Jan 2020 00:30:37 GMT"; // test data
+        String endTime = "Tue, 14 Jan 2020 00:36:37 GMT"; // test data
         CountdownThread countdownThread = new CountdownThread(endTime);
         new Thread(countdownThread).start();
         return view;
@@ -97,7 +97,7 @@ public class CountdownFragment extends Fragment {
                 timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
             }
 
-            if (minutes == 0 && seconds < 10 && seconds % 2 == 0) {
+            if (minutes == 0 && seconds <= 10 && seconds % 2 == 0) {
                 this.flash = true;
             } else {
                 this.flash = false;
@@ -120,9 +120,9 @@ public class CountdownFragment extends Fragment {
         public void run() {
             countdownView.setText(output);
             if (flash) {
-                //background.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+                background.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
             } else {
-                //background.setBackgroundColor(getResources().getColor(android.R.color.white));
+                background.setBackgroundColor(getResources().getColor(android.R.color.white));
             }
         }
     }
