@@ -9,12 +9,22 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CountdownFragment extends Fragment {
 
+    private final String SERVER_URL = "https://2c0e0446.ngrok.io"; // Must be https
     private TextView countdownView;
     private View background;
     private Handler handler;
@@ -31,10 +41,25 @@ public class CountdownFragment extends Fragment {
         background = view;
         handler = new Handler();
 
-        // get request;
-        String endTime = "Tue, 14 Jan 2020 00:43:37 GMT"; // test data
-        CountdownThread countdownThread = new CountdownThread(endTime);
-        new Thread(countdownThread).start();
+        RequestQueue queue = Volley.newRequestQueue(view.getContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, SERVER_URL,
+                response -> {
+                    try {
+
+
+                        JSONObject obj = new JSONObject(response);
+                        CountdownThread countdownThread = new CountdownThread(obj.getString("time"));
+                        new Thread(countdownThread).start();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
         return view;
     }
 
@@ -109,9 +134,9 @@ public class CountdownFragment extends Fragment {
         public void run() {
             countdownView.setText(output);
             if (flash) {
-                background.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+                //background.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
             } else {
-                background.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                //background.setBackgroundColor(getResources().getColor(android.R.color.background_light));
             }
         }
     }
