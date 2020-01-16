@@ -46,8 +46,6 @@ public class CountdownFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, SERVER_URL,
                 response -> {
                     try {
-
-
                         JSONObject obj = new JSONObject(response);
                         CountdownThread countdownThread = new CountdownThread(obj.getString("time"));
                         new Thread(countdownThread).start();
@@ -56,8 +54,6 @@ public class CountdownFragment extends Fragment {
                     }
                 }, error -> {
         });
-
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
         return view;
