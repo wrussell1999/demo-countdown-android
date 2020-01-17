@@ -25,4 +25,3 @@ public class UIThread extends CountdownFragment implements Runnable {
         }
     }
 }
-}
