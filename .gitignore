@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 .vscode/
+app/google-services.json
