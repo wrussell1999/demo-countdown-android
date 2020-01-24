@@ -1,22 +1,17 @@
 package com.willrussell.hackathon_demo_timer_android;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+@Data
+@NoArgsConstructor
+@IgnoreExtraProperties
 public class Time {
-
-    private String time;
-
-    public Time() {
-
-    }
-
-    public Time(String time) {
-        this.time = time;
-    }
-
-    public String getTime() {
-        return this.time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
+    @NonNull
+    private Integer time;
+    @NonNull
+    private Boolean start;
 }
