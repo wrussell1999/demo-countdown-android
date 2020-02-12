@@ -1,4 +1,4 @@
-# Hackathon Demo Timer - Android Client
+# Hackathon Demo Countdown - Android Client
 
 Run your hackathon demos easier by controlling it remotely.
 
