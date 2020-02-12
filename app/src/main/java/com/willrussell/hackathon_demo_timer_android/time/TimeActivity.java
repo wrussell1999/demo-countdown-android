@@ -37,15 +37,14 @@ public class TimeActivity extends AppCompatActivity {
     class TimeThread implements Runnable {
         private String time;
 
-        public TimeThread() {
-
-        }
 
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
                 time = getTime();
-                handler.post(new UiThread(time, timeView));
+                runOnUiThread(() -> {
+                    timeView.setText(time);
+                });
             }
         }
 
