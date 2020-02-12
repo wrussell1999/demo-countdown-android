@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.willrussell.hackathon_demo_timer_android.time_threads.TimeThread;
 
@@ -17,6 +15,7 @@ public class TimeActivity extends AppCompatActivity {
 
     protected TextView timeView;
     protected Handler handler;
+    private TimeThread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,7 @@ public class TimeActivity extends AppCompatActivity {
         handler = new Handler();
         timeView = findViewById(R.id.time_remaining);
 
-        TimeThread thread = new TimeThread();
+        thread = new TimeThread();
         new Thread(thread).start();
     }
 
@@ -42,6 +41,7 @@ public class TimeActivity extends AppCompatActivity {
         if (id == R.id.action_countdown) {
             Intent intent = new Intent(this, CountdownActivity.class);
             startActivity(intent);
+            return true;
         } else if (id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
