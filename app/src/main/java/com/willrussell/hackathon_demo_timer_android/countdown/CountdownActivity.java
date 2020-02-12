@@ -102,7 +102,7 @@ public class CountdownActivity extends AppCompatActivity {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
-                this.countdown = getTime(); // Must not be on UiThread
+                countdown = getTime(); // Must not be on UiThread
                 runOnUiThread(() -> {
                     countdownTimeView.setText(countdown);
                     if (flash) {
