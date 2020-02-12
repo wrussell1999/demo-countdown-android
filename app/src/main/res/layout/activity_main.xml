@@ -8,14 +8,23 @@
     android:gravity="center"
     android:keepScreenOn="true"
     tools:context=".MainActivity">
-    <FrameLayout
-        android:id="@+id/frame_layout"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-    </FrameLayout>
+        android:orientation="horizontal" >
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_mode"
+            android:onClick="startTimeMode" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/countdown_mode"
+            android:onClick="startCountdownMode" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
