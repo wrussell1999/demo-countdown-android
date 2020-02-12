@@ -4,12 +4,12 @@ import android.widget.TextView;
 
 import com.willrussell.hackathon_demo_timer_android.CountdownFragment;
 
-public class UIThread extends CountdownFragment implements Runnable {
+public class UiThread extends CountdownFragment implements Runnable {
     private String output;
     private boolean flash;
     private TextView countdownView;
 
-    public UIThread(String output, Boolean flash, TextView view) {
+    public UiThread(String output, Boolean flash, TextView view) {
         this.output = output;
         this.flash = flash;
         this.countdownView = view;

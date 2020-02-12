@@ -41,7 +41,7 @@ public class CountdownThread extends CountdownFragment implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             countdown = getTime();
-            handler.post(new UIThread(this.countdown, this.flash, this.countdownView));
+            handler.post(new UiThread(this.countdown, this.flash, this.countdownView));
             if (finish) {
                 break;
             }

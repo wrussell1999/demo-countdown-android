@@ -3,6 +3,7 @@ package com.willrussell.hackathon_demo_timer_android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ public class TimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
 
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         timeView = findViewById(R.id.time_remaining);
 
         thread = new TimeThread();
