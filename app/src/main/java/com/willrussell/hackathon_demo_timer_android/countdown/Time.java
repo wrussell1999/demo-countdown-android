@@ -1,4 +1,4 @@
-package com.willrussell.hackathon_demo_timer_android;
+package com.willrussell.hackathon_demo_timer_android.countdown;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -14,4 +14,14 @@ public class Time {
     private Integer time;
     @NonNull
     private Boolean start;
+
+    @NonNull
+    public Integer getTime() {
+        return this.time;
+    }
+
+    @NonNull
+    public Boolean getStart() {
+        return this.start;
+    }
 }

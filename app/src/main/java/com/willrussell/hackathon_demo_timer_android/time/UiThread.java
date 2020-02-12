@@ -1,14 +1,14 @@
-package com.willrussell.hackathon_demo_timer_android.time_threads;
+package com.willrussell.hackathon_demo_timer_android.time;
 
 import android.widget.TextView;
 
-import com.willrussell.hackathon_demo_timer_android.TimeActivity;
-
-class UiThread extends TimeActivity implements Runnable {
+class UiThread implements Runnable {
     private String output;
+    private TextView timeView;
 
-    public UiThread(String output) {
+    public UiThread(String output, TextView timeView) {
         this.output = output;
+        this.timeView = timeView;
     }
 
     @Override
