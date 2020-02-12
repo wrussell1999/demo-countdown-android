@@ -45,11 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_time) {
-            Intent intent = new Intent(this, TimeActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_about) {
+        if (id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
             return true;

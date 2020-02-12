@@ -20,7 +20,7 @@
             android:layout_height="@dimen/home_button_height"
             android:text="@string/time_mode"
             android:onClick="startTimeMode"
-            android:layout_margin="@dimen/label_width" />
+            android:layout_marginRight="@dimen/label_width" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="@dimen/home_button_width"
