@@ -37,7 +37,6 @@ public class CountdownActivity extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference("countdown");
     private Thread countdownThread;
     private Time time;
-    protected Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,6 @@ public class CountdownActivity extends AppCompatActivity {
         countdownTimeView = findViewById(R.id.time);
         decorView = getWindow().getDecorView();
 
-        handler = new Handler();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,7 +82,7 @@ public class CountdownActivity extends AppCompatActivity {
     class CountdownThread implements Runnable {
         private Time time;
         private Date endTime;
-        private String countdown;
+        protected String countdown;
         private boolean flash;
         private boolean finish;
 
@@ -104,8 +102,18 @@ public class CountdownActivity extends AppCompatActivity {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
-                this.countdown = getTime();
-                handler.post(new UiThread(this.countdown, this.flash, countdownTimeView));
+                this.countdown = getTime(); // Must not be on UiThread
+                runOnUiThread(() -> {
+                    countdownTimeView.setText(countdown);
+                    if (flash) {
+                        countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
+                        decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+                    } else {
+                        countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                        decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                    }
+                });
+
                 if (finish) {
                     break;
                 }
@@ -143,29 +151,6 @@ public class CountdownActivity extends AppCompatActivity {
             }
 
             return timeFormatted;
-        }
-    }
-
-    public class UiThread implements Runnable {
-
-        private String output;
-        private boolean flash;
-        private TextView countdownView;
-
-        public UiThread(String output, Boolean flash, TextView view) {
-            this.output = output;
-            this.flash = flash;
-            this.countdownView = view;
-        }
-
-        @Override
-        public void run() {
-            this.countdownView.setText(output);
-            if (flash) {
-                decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-            } else {
-                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-            }
         }
     }
 
