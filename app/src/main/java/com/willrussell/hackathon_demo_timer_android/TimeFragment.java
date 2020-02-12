@@ -24,7 +24,7 @@ public class TimeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.time_fragment, container, false);
+        View view = inflater.inflate(R.layout.activity_time, container, false);
         timeView = view.findViewById(R.id.time);
         handler = new Handler();
         TimeThread timeThread = new TimeThread();
