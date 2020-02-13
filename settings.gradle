@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':watch'
 rootProject.name='hackathon-demo-timer-android'

@@ -1,4 +1,4 @@
-package com.willrussell.hackathon_demo_timer_android;
+package com.willrussell.hackathon_demo_countdown_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
