@@ -9,9 +9,12 @@ import java.util.Date;
 
 public class MainActivity extends WearableActivity {
 
+    private final String COUNTDOWN_TAG = "Countdown";
+
     private TextView countdown;
     private TextView realTime;
     private TimeThread thread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
