@@ -84,9 +84,7 @@ public class MainActivity extends WearableActivity {
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
                 time = getTime();
-                runOnUiThread(() -> {
-                    timeView.setText(time);
-                });
+                runOnUiThread(() -> timeView.setText(time));
             }
         }
 
