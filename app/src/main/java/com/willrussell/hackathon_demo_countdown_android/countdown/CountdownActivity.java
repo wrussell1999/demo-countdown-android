@@ -1,9 +1,9 @@
 package com.willrussell.hackathon_demo_countdown_android.countdown;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,17 +59,20 @@ public class CountdownActivity extends AppCompatActivity {
 
                     if (countdownThread == null){
                         Log.w(TAG, "creating first countdown");
-                        countdownThread = new Thread(countdown);
-                        countdownThread.start();
+                        task.execute();
+                        //countdownThread = new Thread(countdown);
+                        //countdownThread.start();
                     } else {
                         Log.w(TAG, "Interupting existing countdown");
-                        countdownThread.interrupt();
+                        //countdownThread.interrupt();
+                        task.cancel(true);
                         try {
-                            countdownThread.join();
-                        } catch (InterruptedException ignored) {}
+                            //countdownThread.join();
+                        } catch (Exception ignored) {}
                         Log.w(TAG, "Creating new countdown");
-                        countdownThread = new Thread(countdown);
-                        countdownThread.start();
+                        //countdownThread = new Thread(countdown);
+                        //countdownThread.start();
+                        task.execute();
                     }
                 }
             }
@@ -78,6 +81,15 @@ public class CountdownActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
+
+    AsyncTask task = new AsyncTask() {
+        @Override
+        protected Boolean doInBackground(Object[] objects) {
+
+
+            return true;
+        }
+    };
 
     class CountdownThread implements Runnable {
         private Time time;
@@ -106,6 +118,7 @@ public class CountdownActivity extends AppCompatActivity {
                 countdown = getTime();
                 runOnUiThread(() -> countdownTimeView.setText(countdown));
 
+                /*
                 if (flash) {
                     runOnUiThread(() -> {
                         countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
@@ -117,6 +130,7 @@ public class CountdownActivity extends AppCompatActivity {
                         decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                     });
                 }
+                 */
 
                 if (finish) {
                     break;
@@ -157,27 +171,4 @@ public class CountdownActivity extends AppCompatActivity {
             return timeFormatted;
         }
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_countdown, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_time) {
-            Intent intent = new Intent(this, TimeActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_about) {
-            Intent intent = new Intent(this, AboutActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }
