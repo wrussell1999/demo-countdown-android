@@ -117,10 +117,8 @@ public class MainActivity extends WearableActivity {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
-                countdown = getTime(); // Must not be on UiThread
-                runOnUiThread(() -> {
-                    countdownView.setText(countdown);
-                });
+                countdown = getTime();
+                runOnUiThread(() -> countdownView.setText(countdown));
 
                 if (finish) {
                     break;
