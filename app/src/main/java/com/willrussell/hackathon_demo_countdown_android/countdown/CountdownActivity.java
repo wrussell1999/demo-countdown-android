@@ -1,4 +1,4 @@
-package com.willrussell.hackathon_demo_timer_android.countdown;
+package com.willrussell.hackathon_demo_countdown_android.countdown;
 
 import android.content.Intent;
 import android.os.Build;
@@ -20,9 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.database.ValueEventListener;
-import com.willrussell.hackathon_demo_timer_android.R;
-import com.willrussell.hackathon_demo_timer_android.AboutActivity;
-import com.willrussell.hackathon_demo_timer_android.time.TimeActivity;
+import com.willrussell.hackathon_demo_countdown_android.R;
+import com.willrussell.hackathon_demo_countdown_android.AboutActivity;
+import com.willrussell.hackathon_demo_countdown_android.time.TimeActivity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -102,17 +102,21 @@ public class CountdownActivity extends AppCompatActivity {
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
-                countdown = getTime(); // Must not be on UiThread
-                runOnUiThread(() -> {
-                    countdownTimeView.setText(countdown);
-                    if (flash) {
+
+                countdown = getTime();
+                runOnUiThread(() -> countdownTimeView.setText(countdown));
+
+                if (flash) {
+                    runOnUiThread(() -> {
                         countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
                         decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-                    } else {
+                    });
+                } else {
+                    runOnUiThread(() -> {
                         countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
                         decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                    }
-                });
+                    });
+                }
 
                 if (finish) {
                     break;

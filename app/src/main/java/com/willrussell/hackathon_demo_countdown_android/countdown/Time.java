@@ -1,4 +1,4 @@
-package com.willrussell.hackathon_demo_timer_android.countdown;
+package com.willrussell.hackathon_demo_countdown_android.countdown;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

@@ -1,8 +1,6 @@
-package com.willrussell.hackathon_demo_timer_android;
+package com.willrussell.hackathon_demo_countdown_android;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.willrussell.hackathon_demo_timer_android.countdown.CountdownActivity;
-import com.willrussell.hackathon_demo_timer_android.time.TimeActivity;
+import com.willrussell.hackathon_demo_countdown_android.countdown.CountdownActivity;
+import com.willrussell.hackathon_demo_countdown_android.time.TimeActivity;
 
 
 public class MainActivity extends AppCompatActivity {

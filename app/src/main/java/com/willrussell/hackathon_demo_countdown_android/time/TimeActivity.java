@@ -1,4 +1,4 @@
-package com.willrussell.hackathon_demo_timer_android.time;
+package com.willrussell.hackathon_demo_countdown_android.time;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.willrussell.hackathon_demo_timer_android.R;
-import com.willrussell.hackathon_demo_timer_android.AboutActivity;
-import com.willrussell.hackathon_demo_timer_android.countdown.CountdownActivity;
+import com.willrussell.hackathon_demo_countdown_android.R;
+import com.willrussell.hackathon_demo_countdown_android.AboutActivity;
+import com.willrussell.hackathon_demo_countdown_android.countdown.CountdownActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
