@@ -75,28 +75,16 @@ public class CountdownActivity extends AppCompatActivity {
                                 seconds = 0;
                             }
 
-
                             // Flash in last 10 seconds
                             if (minutes == 0 && seconds <= 10 && seconds % 2 == 0) {
-                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
+                                decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
                             } else {
                                 countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
                                 decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                             }
 
-                            // Stop countdown when finished
-                            if (minutes == 0 && seconds < 0 && seconds > -10) {
-                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                                timeFormatted = "0:00";
-                            } else if (minutes == 0 && seconds <= -10) {
-                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                                timeFormatted = "0:00";
-                            } else {
-                                timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
-                            }
+                            timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
 
                             countdownTimeView.setText(timeFormatted);
                         }

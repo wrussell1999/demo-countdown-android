@@ -3,6 +3,5 @@
     <color name="colorPrimary">#D81B60</color>
     <color name="colorPrimaryDark">#C2185B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="connected">#007b00</color>
-    <color name="disconnected">#bf2612</color>
+    <color name="clock">#71E777</color>
 </resources>
