@@ -36,9 +36,9 @@ public class MainActivity extends WearableActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setAmbientEnabled();
 
         countdownTimeView = findViewById(R.id.time);
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -65,9 +65,8 @@ public class MainActivity extends WearableActivity {
 
                             // Start countdown
                             if (time.getStart()) {
-                                long timeLeft = (endTime.getTime() - (new Date()).getTime()) / 1000;
-                                minutes = timeLeft / 60;
-                                seconds = timeLeft % 60;
+                                minutes = (millisUntilFinished / 1000) / 60;
+                                seconds = (millisUntilFinished / 1000) % 60;
                             } else {
                                 minutes = time.getTime();
                                 seconds = 0;
@@ -87,6 +86,5 @@ public class MainActivity extends WearableActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-        setAmbientEnabled();
     }
 }

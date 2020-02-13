@@ -59,16 +59,14 @@ public class CountdownActivity extends AppCompatActivity {
                     new CountDownTimer(limit, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-
                             String timeFormatted;
                             long minutes;
                             long seconds;
 
                             // Start countdown
                             if (time.getStart()) {
-                                long timeLeft = (endTime.getTime() - (new Date()).getTime()) / 1000;
-                                minutes = timeLeft / 60;
-                                seconds = timeLeft % 60;
+                                minutes = (millisUntilFinished  / 1000) / 60;
+                                seconds = (millisUntilFinished / 1000) % 60;
                             } else {
                                 minutes = time.getTime();
                                 seconds = 0;
@@ -89,6 +87,7 @@ public class CountdownActivity extends AppCompatActivity {
                         }
 
                         public void onFinish() {
+                            Log.d(TAG, "Countdown finished");
                             countdownTimeView.setText("0:00");
                         }
                     }.start();
