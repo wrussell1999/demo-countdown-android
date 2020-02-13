@@ -80,7 +80,6 @@ public class MainActivity extends WearableActivity {
     class TimeThread implements Runnable {
         private String time;
 
-
         @Override
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
