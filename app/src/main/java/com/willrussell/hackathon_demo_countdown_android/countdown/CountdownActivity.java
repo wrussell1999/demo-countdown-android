@@ -29,7 +29,6 @@ public class CountdownActivity extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference("countdown");
 
     private Time time;
-    private boolean flash;
     private Date endTime;
 
     @Override

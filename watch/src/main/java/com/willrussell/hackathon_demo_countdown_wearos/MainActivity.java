@@ -2,6 +2,7 @@ package com.willrussell.hackathon_demo_countdown_wearos;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.wearable.activity.WearableActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -24,25 +25,19 @@ public class MainActivity extends WearableActivity {
 
     private final String COUNTDOWN_TAG = "Countdown";
 
-    private TextView countdownView;
-    private TextView timeView;
-    private TimeThread thread;
+    private TextView countdownTimeView;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("countdown");
-    private Thread countdownThread;
     private Time time;
+    private Date endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        countdownView = findViewById(R.id.time);
-        timeView = findViewById(R.id.actual_time);
-
-        thread = new TimeThread();
-        new Thread(thread).start();
+        countdownTimeView = findViewById(R.id.time);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,22 +47,40 @@ public class MainActivity extends WearableActivity {
 
                 if (time == null || !time.equals(value)){
                     time = value;
-                    CountdownThread countdown = new CountdownThread(time);
+                    int limit = (time.getTime() * 60) * 1000 ;
 
-                    if (countdownThread == null){
-                        Log.w(COUNTDOWN_TAG, "creating first countdown");
-                        countdownThread = new Thread(countdown);
-                        countdownThread.start();
-                    } else {
-                        Log.w(COUNTDOWN_TAG, "Interupting existing countdown");
-                        countdownThread.interrupt();
-                        try {
-                            countdownThread.join();
-                        } catch (InterruptedException ignored) {}
-                        Log.w(COUNTDOWN_TAG, "Creating new countdown");
-                        countdownThread = new Thread(countdown);
-                        countdownThread.start();
+                    if (time.getStart()){
+                        Calendar date = Calendar.getInstance();
+                        date.add(Calendar.MINUTE, time.getTime());
+                        endTime = date.getTime();
                     }
+
+                    new CountDownTimer(limit, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+
+                            String timeFormatted;
+                            long minutes;
+                            long seconds;
+
+                            // Start countdown
+                            if (time.getStart()) {
+                                long timeLeft = (endTime.getTime() - (new Date()).getTime()) / 1000;
+                                minutes = timeLeft / 60;
+                                seconds = timeLeft % 60;
+                            } else {
+                                minutes = time.getTime();
+                                seconds = 0;
+                            }
+
+                            timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
+                            countdownTimeView.setText(timeFormatted);
+                        }
+
+                        public void onFinish() {
+                            countdownTimeView.setText("0:00");
+                        }
+                    }.start();
                 }
             }
 
@@ -75,82 +88,5 @@ public class MainActivity extends WearableActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
         setAmbientEnabled();
-    }
-
-    class TimeThread implements Runnable {
-        private String time;
-
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                time = getTime();
-                runOnUiThread(() -> timeView.setText(time));
-            }
-        }
-
-        public String getTime() {
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-            Date date = new Date();
-            String time = formatter.format(date);
-            return time;
-        }
-    }
-
-    class CountdownThread implements Runnable {
-        private Time time;
-        private Date endTime;
-        protected String countdown;
-        private boolean finish;
-
-        public CountdownThread(Time time) {
-            this.time = time;
-            this.countdown = "";
-            this.finish = false;
-            if (this.time.getStart()){
-                Calendar date = Calendar.getInstance();
-                date.add(Calendar.MINUTE, this.time.getTime());
-                this.endTime = date.getTime();
-            }
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                countdown = getTime();
-                runOnUiThread(() -> countdownView.setText(countdown));
-
-                if (finish) {
-                    break;
-                }
-            }
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        public String getTime() {
-            String timeFormatted;
-            long minutes;
-            long seconds;
-            if (this.time.getStart()) {
-
-                long timeLeft = (this.endTime.getTime() - (new Date()).getTime()) / 1000;
-                minutes = timeLeft / 60;
-                seconds = timeLeft % 60;
-            } else {
-                minutes = this.time.getTime();
-                seconds = 0;
-            }
-
-            if (minutes == 0 && seconds < 0 && seconds > -10) {
-                timeFormatted = "0:00";
-            } else if (minutes == 0 && seconds <= -10) {
-                this.finish = true;
-                timeFormatted = "0:00";
-            } else {
-                timeFormatted = String.format(Locale.ENGLISH,"%d:%02d", (int) minutes, (int) seconds);
-            }
-
-            return timeFormatted;
-        }
     }
 }
