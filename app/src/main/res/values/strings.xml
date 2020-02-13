@@ -1,19 +1,13 @@
 <resources>
-    <string name="app_name">Hackathon Timer</string>
+    <string name="app_name">Hackathons UK Demo Countdown</string>
     <string name="time_remaining">Time Remaining:</string>
     <string name="time_placeholder">0:00</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="ip">IP Address</string>
-    <string name="disconnected">◦ Disconnected</string>
-    <string name="connected">◦ Connected to </string>
     <string name="current_time">Current Time:</string>
     <string name="countdown_mode">Countdown Mode</string>
     <string name="time_mode">Time Mode</string>
     <string name="title_activity_about_activity">About</string>
-    <string name="made_by">Made by William Russell</string>
+    <string name="made_by">Made by Will Russell and Charlie de Freitas</string>
     <string name="github">GitHub</string>
     <string name="twitter">Twitter</string>
     <string name="website">Website</string>
-    <string name="error">Could not connect to server</string>
 </resources>

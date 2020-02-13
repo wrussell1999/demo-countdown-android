@@ -1,14 +1,16 @@
-package com.willrussell.hackathon_demo_timer_android;
+package com.willrussell.hackathon_demo_countdown_android;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.willrussell.hackathon_demo_countdown_android.countdown.CountdownActivity;
+import com.willrussell.hackathon_demo_countdown_android.time.TimeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,9 +22,16 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Fragment fragment = CountdownFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment).commit();
+    }
+
+    public void startTimeMode(View v) {
+        Intent intent = new Intent(this, TimeActivity.class);
+        startActivity(intent);
+    }
+
+    public void startCountdownMode(View v) {
+        Intent intent = new Intent(this, CountdownActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -34,15 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_countdown) {
-            Fragment fragment = CountdownFragment.newInstance();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, fragment).commit();
-        } else if (id == R.id.action_time) {
-            Fragment fragment = TimeFragment.newInstance();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, fragment).commit();
-        } else if (id == R.id.action_about) {
+        if (id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
             return true;
