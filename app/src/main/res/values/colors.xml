@@ -3,5 +3,6 @@
     <color name="colorPrimary">#D81B60</color>
     <color name="colorPrimaryDark">#C2185B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="clock">#71E777</color>
+    <color name="light_clock">#000000</color>
+    <color name="dark_clock">#71E777</color>
 </resources>

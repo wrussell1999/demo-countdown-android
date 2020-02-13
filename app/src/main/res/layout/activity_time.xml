@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:format24Hour="hh:mm:ss"
         android:textSize="@dimen/time"
-        android:textColor="@color/clock"
+        android:textColor="@color/light_clock"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
