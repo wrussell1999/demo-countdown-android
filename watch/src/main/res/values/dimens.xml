@@ -12,4 +12,6 @@
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="time_remaining_size">15dp</dimen>
+    <dimen name="time_size">70dp</dimen>
 </resources>

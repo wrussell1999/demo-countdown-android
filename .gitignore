@@ -14,3 +14,4 @@
 .cxx
 .vscode/
 app/google-services.json
+watch/google-services.json
