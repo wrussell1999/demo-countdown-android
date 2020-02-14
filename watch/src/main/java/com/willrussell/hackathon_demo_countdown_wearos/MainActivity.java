@@ -50,23 +50,27 @@ public class MainActivity extends WearableActivity {
 
                 if (time == null || !time.equals(value)){
                     time = value;
-                    int limit = (time.getTime() * 60) * 1000 ;
 
                     if (time.getStart()){
                         Calendar date = Calendar.getInstance();
                         date.add(Calendar.MINUTE, time.getTime());
                         endTime = date.getTime();
-                    }
 
-                    if (countdown == null) {
-                        Log.d(TAG, "Start first countdown");
-                        initCountdown();
-                        countdown.start();
+                        if (countdown == null) {
+                            Log.d(TAG, "Start first countdown");
+                            initCountdown();
+                            countdown.start();
+                        } else {
+                            Log.d(TAG, "Resetting");
+                            countdown.cancel();
+                            initCountdown();
+                            countdown.start();
+                        }
                     } else {
-                        Log.d(TAG, "Resetting");
-                        countdown.cancel();
-                        initCountdown();
-                        countdown.start();
+                        countdownTimeView.setText(time.getTime() + ":00");
+                        if (countdown != null) {
+                            countdown.cancel();
+                        }
                     }
                 }
             }

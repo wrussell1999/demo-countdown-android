@@ -54,21 +54,25 @@ public class CountdownActivity extends AppCompatActivity {
                         Calendar date = Calendar.getInstance();
                         date.add(Calendar.MINUTE, time.getTime());
                         endTime = date.getTime();
-                    }
 
-                    if (countdown == null) {
-                        Log.d(TAG, "Start first countdown");
-                        initCountdown();
-                        countdown.start();
+                        if (countdown == null) {
+                            Log.d(TAG, "Start first countdown");
+                            initCountdown();
+                            countdown.start();
+                        } else {
+                            Log.d(TAG, "Resetting");
+                            countdown.cancel();
+                            initCountdown();
+                            countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                            decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                            countdown.start();
+                        }
                     } else {
-                        Log.d(TAG, "Resetting");
-                        countdown.cancel();
-                        initCountdown();
-                        countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                        decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                        countdown.start();
+                        countdownTimeView.setText(time.getTime() + ":00");
+                        if (countdown != null) {
+                            countdown.cancel();
+                        }
                     }
-
                 }
             }
 
