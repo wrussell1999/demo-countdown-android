@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class MainActivity extends WearableActivity {
 
-    private final String COUNTDOWN_TAG = "Countdown";
+    private final String TAG = "Countdown";
 
     private TextView countdownTimeView;
 
@@ -31,6 +31,7 @@ public class MainActivity extends WearableActivity {
     private DatabaseReference myRef = database.getReference("countdown");
     private Time time;
     private Date endTime;
+    private CountDownTimer countdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,14 @@ public class MainActivity extends WearableActivity {
         setContentView(R.layout.activity_main);
         setAmbientEnabled();
 
+        countdown = null;
+
         countdownTimeView = findViewById(R.id.time);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Time value = dataSnapshot.getValue(Time.class);
-                Log.d(COUNTDOWN_TAG, "Value is: " + value);
+                Log.d(TAG, "Value is: " + value);
 
                 if (time == null || !time.equals(value)){
                     time = value;
@@ -55,36 +58,54 @@ public class MainActivity extends WearableActivity {
                         endTime = date.getTime();
                     }
 
-                    new CountDownTimer(limit, 1000) {
-
-                        public void onTick(long millisUntilFinished) {
-
-                            String timeFormatted;
-                            long minutes;
-                            long seconds;
-
-                            // Start countdown
-                            if (time.getStart()) {
-                                minutes = (millisUntilFinished / 1000) / 60;
-                                seconds = (millisUntilFinished / 1000) % 60;
-                            } else {
-                                minutes = time.getTime();
-                                seconds = 0;
-                            }
-
-                            timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
-                            countdownTimeView.setText(timeFormatted);
-                        }
-
-                        public void onFinish() {
-                            countdownTimeView.setText("0:00");
-                        }
-                    }.start();
+                    if (countdown == null) {
+                        Log.d(TAG, "Start first countdown");
+                        initCountdown();
+                        countdown.start();
+                    } else {
+                        Log.d(TAG, "Resetting");
+                        countdown.cancel();
+                        initCountdown();
+                        countdown.start();
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+    }
+
+    public void initCountdown() {
+
+        int limit = (time.getTime() * 60) * 1000 ;
+        Log.d(TAG, limit + "");
+        countdown = new CountDownTimer(limit, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String timeFormatted;
+                long minutes;
+                long seconds;
+
+                // Start countdown
+                if (time.getStart()) {
+                    minutes = (((millisUntilFinished + 500) / 1000 * 1000)  / 1000) / 60;
+                    seconds = (((millisUntilFinished + 500) / 1000 * 1000) / 1000) % 60;
+                } else {
+                    minutes = time.getTime();
+                    seconds = 0;
+                }
+
+                timeFormatted = String.format("%d:%02d", (int) minutes, (int) seconds);
+
+                Log.d(TAG, "Formatted: " + timeFormatted);
+                countdownTimeView.setText(timeFormatted);
+            }
+
+            public void onFinish() {
+                Log.d(TAG, "Countdown finished");
+                countdownTimeView.setText("0:00");
+            }
+        };
     }
 }
