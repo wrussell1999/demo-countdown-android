@@ -64,6 +64,8 @@ public class CountdownActivity extends AppCompatActivity {
                         Log.d(TAG, "Resetting");
                         countdown.cancel();
                         initCountdown();
+                        countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                        decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                         countdown.start();
                     }
 
@@ -113,6 +115,8 @@ public class CountdownActivity extends AppCompatActivity {
             public void onFinish() {
                 Log.d(TAG, "Countdown finished");
                 countdownTimeView.setText("0:00");
+                countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
+                decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
             }
         };
     }
