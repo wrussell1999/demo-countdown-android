@@ -2,6 +2,8 @@ package com.willrussell.hackathon_demo_countdown_android.countdown;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -16,6 +18,9 @@ public class Time {
     private Boolean start;
 
     @NonNull
+    private String timestamp;
+
+    @NonNull
     public Integer getTime() {
         return this.time;
     }
@@ -24,4 +29,7 @@ public class Time {
     public Boolean getStart() {
         return this.start;
     }
+
+    @NonNull
+    public String getTimestamp() { return this.timestamp; }
 }

@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.willrussell.hackathon_demo_countdown_android.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,6 +31,8 @@ public class CountdownActivity extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference("countdown");
 
     private Time time;
+    private int minutes;
+    private int seconds;
     private Date endTime;
     private CountDownTimer countdown;
 
@@ -46,36 +50,42 @@ public class CountdownActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Time value = dataSnapshot.getValue(Time.class);
                 Log.d(TAG, "Value is: " + value);
+                try {
+                    Date dateNow = new Date();
+                    SimpleDateFormat formatterEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date dateEnd = formatterEnd.parse(value.getTimestamp());
 
-                if (time == null || !time.equals(value)){
-                    time = value;
+                    if (time == null || !time.equals(value)){
+                        time = value;
 
-                    if (time.getStart()){
-                        Calendar date = Calendar.getInstance();
-                        date.add(Calendar.MINUTE, time.getTime());
-                        endTime = date.getTime();
+                        if (time.getStart()){
+                            Calendar date = Calendar.getInstance();
+                            date.add(Calendar.MINUTE, time.getTime());
+                            endTime = date.getTime();
 
-                        if (countdown == null) {
-                            Log.d(TAG, "Start first countdown");
-                            initCountdown();
-                            countdown.start();
+                            if (countdown == null) {
+                                Log.d(TAG, "Start first countdown");
+                                initCountdown();
+                                countdown.start();
+                            } else {
+                                Log.d(TAG, "Resetting");
+                                countdown.cancel();
+                                initCountdown();
+                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                                countdown.start();
+                            }
                         } else {
-                            Log.d(TAG, "Resetting");
-                            countdown.cancel();
-                            initCountdown();
-                            countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                            decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                            countdown.start();
-                        }
-                    } else {
-                        countdownTimeView.setText(time.getTime() + ":00");
-                        if (countdown != null) {
-                            countdown.cancel();
+                            countdownTimeView.setText(time.getTime() + ":00");
+                            if (countdown != null) {
+                                countdown.cancel();
+                            }
                         }
                     }
+                } catch (ParseException e ) {
+                    e.printStackTrace();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
@@ -119,8 +129,8 @@ public class CountdownActivity extends AppCompatActivity {
             public void onFinish() {
                 Log.d(TAG, "Countdown finished");
                 countdownTimeView.setText("0:00");
-                countdownTimeView.setTextColor(getResources().getColor(android.R.color.white));
-                decorView.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
+                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
             }
         };
     }
