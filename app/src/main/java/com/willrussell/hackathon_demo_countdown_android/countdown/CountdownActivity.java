@@ -1,5 +1,6 @@
 package com.willrussell.hackathon_demo_countdown_android.countdown;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +21,7 @@ import com.willrussell.hackathon_demo_countdown_android.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,9 +34,7 @@ public class CountdownActivity extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference("countdown");
 
     private Time time;
-    private int minutes;
-    private int seconds;
-    private Date endTime;
+    private int totalSeconds;
     private CountDownTimer countdown;
 
     @Override
@@ -46,44 +47,37 @@ public class CountdownActivity extends AppCompatActivity {
         countdown = null;
 
         myRef.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Time value = dataSnapshot.getValue(Time.class);
                 Log.d(TAG, "Value is: " + value);
-                try {
-                    Date dateNow = new Date();
-                    SimpleDateFormat formatterEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date dateEnd = formatterEnd.parse(value.getTimestamp());
+                if (time == null || !time.equals(value)){
+                    time = value;
 
-                    if (time == null || !time.equals(value)){
-                        time = value;
+                    if (time.getStart()){
+                        long input = time.getTimestamp();
+                        long now = Instant.now().toEpochMilli();
+                        totalSeconds = (int) (Math.abs(input - now));
 
-                        if (time.getStart()){
-                            Calendar date = Calendar.getInstance();
-                            date.add(Calendar.MINUTE, time.getTime());
-                            endTime = date.getTime();
-
-                            if (countdown == null) {
-                                Log.d(TAG, "Start first countdown");
-                                initCountdown();
-                                countdown.start();
-                            } else {
-                                Log.d(TAG, "Resetting");
-                                countdown.cancel();
-                                initCountdown();
-                                countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                                decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                                countdown.start();
-                            }
+                        if (countdown == null) {
+                            Log.d(TAG, "Start first countdown");
+                            initCountdown();
+                            countdown.start();
                         } else {
-                            countdownTimeView.setText(time.getTime() + ":00");
-                            if (countdown != null) {
-                                countdown.cancel();
-                            }
+                            Log.d(TAG, "Resetting");
+                            countdown.cancel();
+                            initCountdown();
+                            countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                            decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                            countdown.start();
+                        }
+                    } else {
+                        countdownTimeView.setText(time.getTime() + ":00");
+                        if (countdown != null) {
+                            countdown.cancel();
                         }
                     }
-                } catch (ParseException e ) {
-                    e.printStackTrace();
                 }
             }
             @Override
@@ -93,7 +87,7 @@ public class CountdownActivity extends AppCompatActivity {
 
     public void initCountdown() {
 
-        int limit = (time.getTime() * 60) * 1000 ;
+        int limit = totalSeconds;
         Log.d(TAG, limit + "");
         countdown = new CountDownTimer(limit, 1000) {
 

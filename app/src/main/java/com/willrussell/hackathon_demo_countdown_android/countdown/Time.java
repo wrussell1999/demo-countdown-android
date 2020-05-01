@@ -18,7 +18,7 @@ public class Time {
     private Boolean start;
 
     @NonNull
-    private String timestamp;
+    private Long timestamp;
 
     @NonNull
     public Integer getTime() {
@@ -31,5 +31,5 @@ public class Time {
     }
 
     @NonNull
-    public String getTimestamp() { return this.timestamp; }
+    public Long getTimestamp() { return this.timestamp; }
 }
