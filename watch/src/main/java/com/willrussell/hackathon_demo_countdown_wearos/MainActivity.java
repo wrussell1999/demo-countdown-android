@@ -30,7 +30,7 @@ public class MainActivity extends WearableActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("countdown");
     private Time time;
-    private Date endTime;
+    private int totalSeconds;
     private CountDownTimer countdown;
 
     @Override
@@ -51,9 +51,9 @@ public class MainActivity extends WearableActivity {
                     time = value;
 
                     if (time.getStart()){
-                        Calendar date = Calendar.getInstance();
-                        date.add(Calendar.MINUTE, time.getTime());
-                        endTime = date.getTime();
+                        ong input = time.getTimestamp();
+                        long now = Instant.now().toEpochMilli();
+                        totalSeconds = (int) (Math.abs(input - now));
 
                         if (countdown == null) {
                             Log.d(TAG, "Start first countdown");
@@ -81,9 +81,8 @@ public class MainActivity extends WearableActivity {
 
     public void initCountdown() {
 
-        int limit = (time.getTime() * 60) * 1000 ;
-        Log.d(TAG, limit + "");
-        countdown = new CountDownTimer(limit, 1000) {
+        Log.d(TAG, totalSeconds + "");
+        countdown = new CountDownTimer(totalSeconds, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 String timeFormatted;

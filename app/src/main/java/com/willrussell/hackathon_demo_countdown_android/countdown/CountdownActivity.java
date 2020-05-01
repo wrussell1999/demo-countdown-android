@@ -19,11 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.willrussell.hackathon_demo_countdown_android.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
 
 public class CountdownActivity extends AppCompatActivity {
 
@@ -87,9 +83,8 @@ public class CountdownActivity extends AppCompatActivity {
 
     public void initCountdown() {
 
-        int limit = totalSeconds;
-        Log.d(TAG, limit + "");
-        countdown = new CountDownTimer(limit, 1000) {
+        Log.d(TAG, totalSeconds + "");
+        countdown = new CountDownTimer(totalSeconds, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
