@@ -7,32 +7,32 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.willrussell.hackathon_demo_countdown_android.R;
 
 import java.time.Instant;
+import java.util.Map;
 
 public class CountdownActivity extends AppCompatActivity {
 
     private final String TAG = "CountdownActivity";
     protected TextView countdownTimeView;
     protected View decorView;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("countdown");
-
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private CollectionReference myRef = database.collection("countdown");
+    private DocumentReference docRef = myRef.document("1");
     private Time time;
     private int totalSeconds;
     private CountDownTimer countdown;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,42 +42,39 @@ public class CountdownActivity extends AppCompatActivity {
         decorView = getWindow().getDecorView();
         countdown = null;
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Time value = dataSnapshot.getValue(Time.class);
-                Log.d(TAG, "Value is: " + value);
-                if (time == null || !time.equals(value)){
-                    time = value;
+        docRef.addSnapshotListener((documentSnapshot, e) -> {
 
-                    if (time.getStart()){
-                        long input = time.getTimestamp();
-                        long now = Instant.now().toEpochMilli();
-                        totalSeconds = (int) (Math.abs(input - now));
+            System.out.println(documentSnapshot.getData());
+            Map<String, Object> value = documentSnapshot.getData();
+            Time values = new Time((Long) value.get("time"), (Boolean) value.get("start"), (Long) value.get("epoch"));
 
-                        if (countdown == null) {
-                            Log.d(TAG, "Start first countdown");
-                            initCountdown();
-                            countdown.start();
-                        } else {
-                            Log.d(TAG, "Resetting");
-                            countdown.cancel();
-                            initCountdown();
-                            countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
-                            decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                            countdown.start();
-                        }
+            Log.d(TAG, "Value is: " + values);
+            if (time == null || !time.equals(values)){
+                time = values;
+                if (time.getStart()){
+                    long input = (long) time.getEpoch();
+                    long now = Instant.now().toEpochMilli();
+                    totalSeconds = (int) (Math.abs(input - now));
+
+                    if (countdown == null) {
+                        Log.d(TAG, "Start first countdown");
+                        initCountdown();
+                        countdown.start();
                     } else {
-                        countdownTimeView.setText(time.getTime() + ":00");
-                        if (countdown != null) {
-                            countdown.cancel();
-                        }
+                        Log.d(TAG, "Resetting");
+                        countdown.cancel();
+                        initCountdown();
+                        countdownTimeView.setTextColor(getResources().getColor(android.R.color.black));
+                        decorView.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                        countdown.start();
+                    }
+                } else {
+                    countdownTimeView.setText(time.getTime() + ":00");
+                    if (countdown != null) {
+                        countdown.cancel();
                     }
                 }
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 
