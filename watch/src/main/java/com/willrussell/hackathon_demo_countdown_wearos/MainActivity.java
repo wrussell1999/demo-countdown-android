@@ -1,29 +1,16 @@
 package com.willrussell.hackathon_demo_countdown_wearos;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.wearable.activity.WearableActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends WearableActivity {
@@ -54,10 +41,10 @@ public class MainActivity extends WearableActivity {
             Time values = new Time((Long) value.get("time"), (Boolean) value.get("start"), (Long) value.get("epoch"));
 
             Log.d(TAG, "Value is: " + values);
-            if (time == null || !time.equals(values)){
+            if (time == null || !time.equals(values)) {
                 time = values;
-                if (time.getStart()){
-                    long input = (long) time.getEpoch();
+                if (time.getStart()) {
+                    long input = time.getEpoch();
                     long now = Instant.now().toEpochMilli();
                     totalSeconds = (int) (Math.abs(input - now));
 
@@ -93,7 +80,7 @@ public class MainActivity extends WearableActivity {
 
                 // Start countdown
                 if (time.getStart()) {
-                    minutes = (((millisUntilFinished + 500) / 1000 * 1000)  / 1000) / 60;
+                    minutes = (((millisUntilFinished + 500) / 1000 * 1000) / 1000) / 60;
                     seconds = (((millisUntilFinished + 500) / 1000 * 1000) / 1000) % 60;
                 } else {
                     minutes = time.getTime();
