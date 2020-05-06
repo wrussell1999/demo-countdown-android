@@ -10,13 +10,23 @@ import lombok.NonNull;
 @NoArgsConstructor
 @IgnoreExtraProperties
 public class Time {
+
+    public Time(Long time, Boolean start, Long epoch) {
+        this.time = time;
+        this.start = start;
+        this.epoch = epoch;
+    }
+
     @NonNull
-    private Integer time;
+    private Long time;
     @NonNull
     private Boolean start;
 
     @NonNull
-    public Integer getTime() {
+    private Long epoch;
+
+    @NonNull
+    public Long getTime() {
         return this.time;
     }
 
@@ -24,4 +34,7 @@ public class Time {
     public Boolean getStart() {
         return this.start;
     }
+
+    @NonNull
+    public Long getEpoch() { return this.epoch; }
 }

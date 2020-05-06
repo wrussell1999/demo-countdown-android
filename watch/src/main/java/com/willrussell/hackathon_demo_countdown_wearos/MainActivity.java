@@ -15,11 +15,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends WearableActivity {
 
@@ -27,8 +32,9 @@ public class MainActivity extends WearableActivity {
 
     private TextView countdownTimeView;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("countdown");
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    private CollectionReference myRef = database.collection("countdown");
+    private DocumentReference docRef = myRef.document("1");
     private Time time;
     private int totalSeconds;
     private CountDownTimer countdown;
@@ -41,41 +47,37 @@ public class MainActivity extends WearableActivity {
         countdown = null;
 
         countdownTimeView = findViewById(R.id.time);
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Time value = dataSnapshot.getValue(Time.class);
-                Log.d(TAG, "Value is: " + value);
+        docRef.addSnapshotListener((documentSnapshot, e) -> {
 
-                if (time == null || !time.equals(value)){
-                    time = value;
+            System.out.println(documentSnapshot.getData());
+            Map<String, Object> value = documentSnapshot.getData();
+            Time values = new Time((Long) value.get("time"), (Boolean) value.get("start"), (Long) value.get("epoch"));
 
-                    if (time.getStart()){
-                        ong input = time.getTimestamp();
-                        long now = Instant.now().toEpochMilli();
-                        totalSeconds = (int) (Math.abs(input - now));
+            Log.d(TAG, "Value is: " + values);
+            if (time == null || !time.equals(values)){
+                time = values;
+                if (time.getStart()){
+                    long input = (long) time.getEpoch();
+                    long now = Instant.now().toEpochMilli();
+                    totalSeconds = (int) (Math.abs(input - now));
 
-                        if (countdown == null) {
-                            Log.d(TAG, "Start first countdown");
-                            initCountdown();
-                            countdown.start();
-                        } else {
-                            Log.d(TAG, "Resetting");
-                            countdown.cancel();
-                            initCountdown();
-                            countdown.start();
-                        }
+                    if (countdown == null) {
+                        Log.d(TAG, "Start first countdown");
+                        initCountdown();
+                        countdown.start();
                     } else {
-                        countdownTimeView.setText(time.getTime() + ":00");
-                        if (countdown != null) {
-                            countdown.cancel();
-                        }
+                        Log.d(TAG, "Resetting");
+                        countdown.cancel();
+                        initCountdown();
+                        countdown.start();
+                    }
+                } else {
+                    countdownTimeView.setText(time.getTime() + ":00");
+                    if (countdown != null) {
+                        countdown.cancel();
                     }
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 
